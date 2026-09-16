@@ -1,27 +1,28 @@
 {
-  "name": "@dreamofice/ts-template",
+  "name": "schemastery-json-schema",
   "version": "1.0.0",
   "description": "",
-  "keywords": [],
-  "homepage": "https://github.com/DreamOfIce/ts-template#readme",
+  "keywords": [
+    "json",
+    "jsonschema",
+    "schema",
+    "schemastery"
+  ],
+  "homepage": "https://github.com/DreamOfIce/SchemasteryJSONSchema#readme",
   "bugs": {
-    "url": "https://github.com/DreamOfIce/ts-template/issues"
+    "url": "https://github.com/DreamOfIce/SchemasteryJSONSchema/issues"
   },
   "license": "MIT",
   "author": "DreamOfIce",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DreamOfIce/ts-template.git"
+    "url": "git+https://github.com/DreamOfIce/SchemasteryJSONSchema.git"
   },
   "type": "module",
-  "main": "./dist/index.cjs",
-  "module": "./dist/index.mjs",
   "types": "./dist/index.d.cts",
   "exports": {
-    ".": {
-      "import": "./dist/index.mjs",
-      "require": "./dist/index.cjs"
-    },
+    ".": "./dist/index.mjs",
+    "./toJSONSchema": "./dist/toJSONSchema.mjs",
     "./package.json": "./package.json"
   },
   "publishConfig": {
@@ -34,19 +35,25 @@
     "prepare": "husky",
     "release": "release-it"
   },
+  "dependencies": {
+    "cosmokit": "^1.8.1",
+    "regexpu-core": "^6.4.0",
+    "schemastery": "^3.18.0"
+  },
   "devDependencies": {
     "@commitlint/cli": "^21.2.2",
     "@commitlint/config-conventional": "^21.2.2",
-    "@release-it/conventional-changelog": "^12.0.0",
+    "@release-it/conventional-changelog": "^12.0.2",
     "@tsconfig/node-lts": "^24.0.1",
     "@tsconfig/strictest": "^2.0.8",
-    "@types/node": "^26.4.1",
+    "@types/node": "^26.5.1",
     "husky": "^9.1.7",
+    "json-schema-typed": "^8.0.2",
     "nano-staged": "^1.0.2",
     "oxfmt": "^0.66.0",
-    "oxlint": "^1.81.0",
+    "oxlint": "^1.83.0",
     "oxlint-tsgolint": "^7.0.2001",
-    "release-it": "^21.0.2",
+    "release-it": "^21.0.3",
     "tsdown": "^0.22.14",
     "typescript": "^7.0.2"
   },
@@ -57,9 +64,12 @@
   "devEngines": {
     "packageManager": {
       "name": "pnpm",
-      "version": "11.25.0",
+      "version": "12.4.1",
       "onFail": "download"
     }
   },
-  "packageManager": "pnpm@11.25.0"
+  "packageManager": "pnpm@12.4.1",
+  "inlinedDependencies": {
+    "json-schema-typed": "8.0.2"
+  }
 }
