@@ -1,7 +1,7 @@
 {
   "name": "schemastery-json-schema",
   "version": "1.0.0",
-  "description": "",
+  "description": "Convert between Schemastery and JSON Schema",
   "keywords": [
     "json",
     "jsonschema",
@@ -18,11 +18,19 @@
     "type": "git",
     "url": "git+https://github.com/DreamOfIce/SchemasteryJSONSchema.git"
   },
+  "files": [
+    "dist",
+    "src"
+  ],
   "type": "module",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
   "types": "./dist/index.d.cts",
   "exports": {
-    ".": "./dist/index.mjs",
-    "./toJSONSchema": "./dist/toJSONSchema.mjs",
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
     "./package.json": "./package.json"
   },
   "publishConfig": {
@@ -50,11 +58,11 @@
     "husky": "^9.1.7",
     "json-schema-typed": "^8.0.2",
     "nano-staged": "^1.0.2",
-    "oxfmt": "^0.66.0",
+    "oxfmt": "^0.68.0",
     "oxlint": "^1.83.0",
     "oxlint-tsgolint": "^7.0.2001",
     "release-it": "^21.0.3",
-    "tsdown": "^0.22.14",
+    "tsdown": "^0.23.0",
     "typescript": "^7.0.2"
   },
   "nano-staged": {

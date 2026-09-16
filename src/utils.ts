@@ -46,9 +46,7 @@ export const hasSameElements = (arr1: unknown[], ...arrs: unknown[][]) =>
  */
 export const isSchemaEqual = <T extends Schema>(schema1: Schema, schema2: T): schema1 is T => {
   if (schema1 === schema2) return true;
-  const s1 = schema1.toJSON();
-  const s2 = schema2.toJSON();
-  const refs = { ...s1.refs, ...s2.refs } as unknown as Record<
+  const refs = { ...schema1.refs, ...schema2.refs } as unknown as Record<
     number,
     Replace<Schema, Schema, bigint>
   >;
