@@ -20,15 +20,22 @@ Add your custom hooks if you want to convert these types
 
 ```ts
 import Schema from "schemastery";
-import { toJSONSchema } from "schemastery-json-schema";
+import { Converter } from "schemastery-json-schema";
 
+const converter = new Converter();
+converter.addHook(Converter.Hooks.Type.SchemasteryToJSONSchema, Error, function (schema, path) {
+  return this.toJSONSchema(
+    Schema.object({ name: Schema.string().required(), msg: Schema.string().required() }),
+  );
+});
 const schema = Schema.object({
-  foo: Schema.Dict(Schema.is(Date), Schema.string().pattern(/^[a-f0-9]*/i)),
+  foo: Schema.dict(Schema.is(Date), Schema.string().pattern(/^[a-f0-9]*/i)),
   bar: Schema.union([Schema.number().step(0.1), Schema.string().min(2)]).default(114514),
   baz: Schema.arrayBuffer(),
+  err: Schema.is(Error),
 });
 
-toJSONSchema(schema);
+converter.toJSONSchema(schema);
 ```
 
 Expected output:
@@ -66,23 +73,36 @@ Expected output:
     "baz": {
       "type": "string",
       "contentEncoding": "base64"
+    },
+    "err": {
+      "type": "object",
+      "properties": {
+        "name": {
+          "type": "string"
+        },
+        "msg": {
+          "type": "string"
+        }
+      },
+      "required": ["name", "msg"],
+      "default": {}
     }
   },
-  "required": [],
   "default": {}
 }
 ```
 
 ## Parameters
 
-### `toJSONSchema(schema, config?)`
-
-| Parameter                 | Type                          | Default      | Description                                                                                                    |
-| ------------------------- | ----------------------------- | ------------ | -------------------------------------------------------------------------------------------------------------- |
-| `draft`                   | `Draft`                       | `"draft-07"` | JSON Schema draft to generate. Currently support `draft-07` and `2020-12`                                      |
-| `addSchema`               | `boolean`                     | `true`       | Whether to add the `$schema` declaration to the root schema.                                                   |
-| `unsupportedTypes`        | `"skip" \| "warn" \| "error"` | `"skip"`     | How to handle Schemastery types that cannot be represented in JSON Schema                                      |
-| `patternTransformOptions` | `object`                      | See below    | Options to transform regexp to patterns. Will pass to [regexpu](https://github.com/mathiasbynens/regexpu-core) |
+| Parameter                                        | Type                          | Default      | Description                                                                                                    |
+| ------------------------------------------------ | ----------------------------- | ------------ | -------------------------------------------------------------------------------------------------------------- |
+| `draft`                                          | `Draft`                       | `"draft-07"` | JSON Schema draft to generate. Currently support `draft-07` and `2020-12`                                      |
+| `addSchemaVersion`                               | `boolean`                     | `true`       | Whether to add the `$schema` declaration to the output                                                         |
+| `unsupportedTypes`                               | `"skip" \| "warn" \| "error"` | `"skip"`     | How to handle Schemastery types that cannot be converted into JSON Schema                                      |
+| `patternTransformOptions`                        | `object`                      | See bellow   | Options to transform regexp to patterns. Will pass to [regexpu](https://github.com/mathiasbynens/regexpu-core) |
+| `patternTransformOptions.unicodeFlag`            | `boolean`                     | `false`      |                                                                                                                |
+| `patternTransformOptions.unicodeSetsFlag`        | `boolean`                     | `true`       |                                                                                                                |
+| `patternTransformOptions.unicodePropertyEscapes` | `boolean`                     | `true`       |                                                                                                                |
 
 ## License
 
