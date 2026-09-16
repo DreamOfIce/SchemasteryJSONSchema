@@ -1,4 +1,4 @@
-# schemasteryJSONSchema
+# SchemasteryJSONSchema
 
 Convert between [Schemastery](https://github.com/Shigma/Schemastery) and [JSON Schema](https://json-schema.org/)
 
@@ -20,7 +20,7 @@ Add your custom hooks if you want to convert these types
 
 ```ts
 import Schema from "schemastery";
-import { Converter } from "schemastery-json-schema";
+import { Converter } from "@dreamofice/schemastery-json-schema";
 
 const converter = new Converter();
 converter.addHook(Converter.Hooks.Type.SchemasteryToJSONSchema, Error, function (schema, path) {

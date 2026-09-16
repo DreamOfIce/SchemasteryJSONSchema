@@ -1,5 +1,5 @@
 {
-  "name": "schemastery-json-schema",
+  "name": "@dreamofice/schemastery-json-schema",
   "version": "1.0.0",
   "description": "Convert between Schemastery and JSON Schema",
   "keywords": [
@@ -69,7 +69,7 @@
     "*": "pnpm fmt --no-error-on-unmatched-pattern",
     "*.{c,m}?{js,ts}": "pnpm lint"
   },
-  "packageManager": "pnpm@12.4.1",
+  "packageManager": "pnpm@12.4.2",
   "inlinedDependencies": {
     "json-schema-typed": "8.0.2"
   }
