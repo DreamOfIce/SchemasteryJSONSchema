@@ -69,13 +69,6 @@
     "*": "pnpm fmt --no-error-on-unmatched-pattern",
     "*.{c,m}?{js,ts}": "pnpm lint"
   },
-  "devEngines": {
-    "packageManager": {
-      "name": "pnpm",
-      "version": "12.4.1",
-      "onFail": "download"
-    }
-  },
   "packageManager": "pnpm@12.4.1",
   "inlinedDependencies": {
     "json-schema-typed": "8.0.2"
