@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.1](https://github.com/DreamOfIce/SchemasteryJSONSchema/compare/v1.1.0...v1.1.1) (2026-09-27)
+
+### Bug Fixes
+
+- fix a typo ([d2e0c1f](https://github.com/DreamOfIce/SchemasteryJSONSchema/commit/d2e0c1f581ae2eea3db24562c4804630c8db6049))
+
 ## [1.1.0](https://github.com/DreamOfIce/SchemasteryJSONSchema/compare/v1.0.0...v1.1.0) (2026-09-27)
 
 ### Features
