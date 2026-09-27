@@ -11,6 +11,12 @@ npm:
   publish: true
   publishPackageManager: pnpm
   skipChecks: true
+hooks:
+  "before:init":
+    - pnpm lint
+  "after:bump":
+    - pnpm fmt
+    - pnpm build
 plugins:
   "@release-it/conventional-changelog":
     preset:
