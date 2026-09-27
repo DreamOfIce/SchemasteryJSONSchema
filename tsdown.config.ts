@@ -7,6 +7,5 @@ export default defineConfig({
   entry: ["./src/index.ts"],
   exports: true,
   format: ["esm", "cjs"],
-  minify: true,
   target: "es2020",
 });
