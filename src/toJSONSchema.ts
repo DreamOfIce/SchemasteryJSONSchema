@@ -186,9 +186,24 @@ export function toJSONSchema<T, C extends Converter.Config>(
         return true;
     }
   }
-  Object.assign(type, pick(schema.meta, ["description", "default"]));
-  if (schema.meta.comment) type.$comment = schema.meta.comment;
+  const { meta } = schema;
+  if (meta.default && meta.required !== false) type.default = meta.default;
+  if (meta.description)
+    type.description =
+      typeof meta.description === "string"
+        ? meta.description
+        : Object.entries(meta.description)
+            .map(([k, v]) => `${k}: ${v}`)
+            .join("\n");
+  Object.assign(
+    type,
+    pick(
+      schema.meta,
+      schema.meta.required === false ? ["description"] : ["description", "default"],
+    ),
+  );
+  if (meta.comment) type.$comment = meta.comment;
   if (assertJSONSchemaVersion(type, "2020-12"))
-    schema.meta.badges?.forEach((badge) => (type.deprecated ||= badge.text === "deprecated"));
+    meta.badges?.forEach((badge) => (type.deprecated ||= badge.text === "deprecated"));
   return type as InferJSONSchemaVersion<T, C>;
 }
