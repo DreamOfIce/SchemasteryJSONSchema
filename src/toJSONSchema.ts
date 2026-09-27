@@ -1,4 +1,4 @@
-import { mapValues, pick } from "cosmokit";
+import { mapValues } from "cosmokit";
 import { TypeName } from "json-schema-typed";
 import type { JSONSchema as JSONSchemaDraft07 } from "json-schema-typed/draft-07";
 import type { JSONSchema as JSONSchema202012 } from "json-schema-typed/draft-2020-12";
@@ -187,6 +187,7 @@ export function toJSONSchema<T, C extends Converter.Config>(
     }
   }
   const { meta } = schema;
+  if (meta.comment) type.$comment = meta.comment;
   if (meta.default && meta.required !== false) type.default = meta.default;
   if (meta.description)
     type.description =
@@ -195,14 +196,6 @@ export function toJSONSchema<T, C extends Converter.Config>(
         : Object.entries(meta.description)
             .map(([k, v]) => `${k}: ${v}`)
             .join("\n");
-  Object.assign(
-    type,
-    pick(
-      schema.meta,
-      schema.meta.required === false ? ["description"] : ["description", "default"],
-    ),
-  );
-  if (meta.comment) type.$comment = meta.comment;
   if (assertJSONSchemaVersion(type, "2020-12"))
     meta.badges?.forEach((badge) => (type.deprecated ||= badge.text === "deprecated"));
   return type as InferJSONSchemaVersion<T, C>;
