@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.2](https://github.com/DreamOfIce/SchemasteryJSONSchema/compare/v1.1.1...v1.1.2) (2026-09-29)
+
+### Bug Fixes
+
+- fix array compare error in `isSchemaEqual` ([713fa43](https://github.com/DreamOfIce/SchemasteryJSONSchema/commit/713fa437fa8f617bb4cf392db796f37cc47c16ab))
+
 ## [1.1.1](https://github.com/DreamOfIce/SchemasteryJSONSchema/compare/v1.1.0...v1.1.1) (2026-09-27)
 
 ### Bug Fixes

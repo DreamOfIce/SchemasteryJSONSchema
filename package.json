@@ -1,6 +1,6 @@
 {
   "name": "@dreamofice/schemastery-json-schema",
-  "version": "1.1.1",
+  "version": "1.1.2",
   "description": "Convert between Schemastery and JSON Schema",
   "keywords": [
     "json",
