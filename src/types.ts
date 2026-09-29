@@ -25,12 +25,12 @@ export type InferJSONSchemaVersion<T, C extends DeepPartial<Converter.Config>> =
 
 export type Replace<T, U, V, R = true> = R extends true
   ? T extends object
-    ? { [K in keyof T]: Replace<T[K], U, V, never> }
+    ? { [K in keyof T]: Replace<T[K], U, V, false> }
     : T
   : T extends U
     ? V
     : T extends object
-      ? { [K in keyof T]: Replace<T[K], U, V, never> }
+      ? { [K in keyof T]: Replace<T[K], U, V, false> }
       : T;
 
 export class UnsupportedError extends Error {

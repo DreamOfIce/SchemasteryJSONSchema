@@ -1,4 +1,4 @@
-import { mapValues } from "cosmokit";
+import { deepEqual, mapValues } from "cosmokit";
 import rewritePattern from "regexpu-core";
 import Schema from "schemastery";
 
@@ -9,6 +9,8 @@ export interface ConvertRegExpOptions {
   unicodePropertyEscapes?: boolean;
   unicodeSets?: boolean;
 }
+
+export type SchemaWithRefs = Replace<Schema, Schema, bigint>;
 
 /**
  * convert a RegExp to a version without flags.
@@ -46,24 +48,26 @@ export const hasSameElements = (arr1: unknown[], ...arrs: unknown[][]) =>
  */
 export const isSchemaEqual = <T extends Schema>(schema1: Schema, schema2: T): schema1 is T => {
   if (schema1 === schema2) return true;
-  const refs = { ...schema1.refs, ...schema2.refs } as unknown as Record<
-    number,
-    Replace<Schema, Schema, bigint>
-  >;
+  const refs = { ...schema1.refs, ...schema2.refs } as unknown as Record<number, SchemaWithRefs>;
 
-  const checkEqual = (
-    a: Replace<Schema, Schema, number>,
-    b: Replace<Schema, Schema, number>,
-  ): boolean => {
+  const checkEqual = (a: SchemaWithRefs, b: SchemaWithRefs): boolean => {
     if (!hasSameElements(Object.keys(a), Object.keys(b))) return false;
     let result = true;
     Object.entries(a).forEach(([key, valueA]) => {
-      const valueB = (<Record<string, number>>b)[key]!;
-      if (key === "sKey" || key === "inner") result &&= checkEqual(refs[valueA]!, refs[valueB]!);
-      else if (Array.isArray(valueA)) result &&= Array.isArray(valueB);
-      else if (typeof valueA === "object")
-        result &&= typeof valueB === "object" && checkEqual(valueA, valueB);
-      else result &&= valueA === valueB;
+      const valueB = Reflect.get(b, key) as unknown;
+      if (key === "sKey" || key === "inner")
+        result &&= checkEqual(refs[<number>valueA]!, refs[<number>valueB]!);
+      else if (Array.isArray(valueA)) {
+        if (!Array.isArray(valueB)) result = false;
+        else if (key === "list")
+          result &&= (<number[]>valueA).every((e, i) =>
+            checkEqual(refs[e]!, refs[<number>valueB[i]]!),
+          );
+        result &&= Array.isArray(valueB);
+      } else if (typeof valueA === "object")
+        result &&=
+          typeof valueB === "object" && checkEqual(<SchemaWithRefs>valueA, <SchemaWithRefs>valueB);
+      else result &&= deepEqual(valueA, valueB);
     });
     return result;
   };
