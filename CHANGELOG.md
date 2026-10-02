@@ -1,5 +1,11 @@
 # Changelog
 
+## [1.1.3](https://github.com/DreamOfIce/SchemasteryJSONSchema/compare/v1.1.2...v1.1.3) (2026-10-02)
+
+### Bug Fixes
+
+- fix enum type ([ae3165e](https://github.com/DreamOfIce/SchemasteryJSONSchema/commit/ae3165eb7b0abcab26f417e41dc52f18e82fd716))
+
 ## [1.1.2](https://github.com/DreamOfIce/SchemasteryJSONSchema/compare/v1.1.1...v1.1.2) (2026-09-29)
 
 ### Bug Fixes
