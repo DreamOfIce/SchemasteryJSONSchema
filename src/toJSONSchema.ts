@@ -164,7 +164,7 @@ export function toJSONSchema<T, C extends Converter.Config>(
         break;
       case "union":
         if (schema.list!.reduce((acc, s) => acc && s.type === "const", true)) {
-          type.enum = schema.list!.map((v) => toJSONCompatible(v));
+          type.enum = schema.list!.map(({ value }) => toJSONCompatible(value));
         } else {
           const schemaJSON = schema.toJSON();
           if (isSchemaEqual(schemaArrayBuffer, schemaJSON))
